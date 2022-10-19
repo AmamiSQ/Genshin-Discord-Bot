@@ -3,6 +3,9 @@ const { Client, GatewayIntentBits, EmbedBuilder, PermissionsBitField, Permission
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const { token } = require('./config.json');
 
+const { EmbedClass } = require('./embed.js');
+const embed = new EmbedClass();
+
 const prefix = '!';
 
 //create new client instance
@@ -27,6 +30,11 @@ client.on('messageCreate', (message) =>
         message.channel.send('shutting down...').then(() => {
             client.destroy();
         })
+    }
+
+    if (cmd === 'embed'){
+        const plswork = embed.emBuild();
+        message.channel.send({ embeds: [plswork] });
     }
 });
 
