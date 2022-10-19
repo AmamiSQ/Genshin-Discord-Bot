@@ -9,6 +9,7 @@
   "author": "Amami",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.6.0"
+    "discord.js": "^14.6.0",
+    "requests": "^0.3.0"
   }
 }
