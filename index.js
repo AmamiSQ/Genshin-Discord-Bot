@@ -1,34 +1,22 @@
 //initialize params
 const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const { token } = require('./config.json');
-
 const { EmbedClass } = require('./embed.js');
-const embed = new EmbedClass();
+const { WebScraper } = require('./scraper.js');
 
 const prefix = '!';
 
-let charArr = ['yanfei', 'albedo']; //use genshin.gg
-let weaponArr = []; //use https://www.genshinlab.com/genshin-impact-weapon-list/
+//initialize classes
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const embed = new EmbedClass();
+const scrape = new WebScraper();
 
-//push possible searches into arrays
-    /*
-        insert code
-        might make this a function idk
-        its aids but im lowkey having fun lmao
-    */
+//initialize arrays
+let charArr = scrape.characterScrape(); 
+let weaponArr = scrape.weaponScrape(); 
+let ascLvl = [20, 30, 40, 50, 60, 70, 80, 90]; 
 
-
-//create new client instance
-client.on('ready', () => {
-    console.log('pls work');
-    client.user.setActivity('Yanfei supremacy');
-});
-
-function searchCommand(search)
-{
-    return search;
-    //function to loop through web search, probably
+//function to loop through web search, probably
     //should also make an array for characters and weapons
         //DONT HARDCODE
         //also set to lower case when putting into the array
@@ -39,8 +27,22 @@ function searchCommand(search)
     figure something out/make a function to make it easier
     especially for the ascension nums
     */
-};
 
+//values
+let title = 'Heizou';
+let url = 'https://discord.js.org/';
+let desc = 'bleh';
+let thumb = 'https://i.imgur.com/AfFp7pu.png'; //weapon/character img
+let img = 'https://static.wikia.nocookie.net/gensin-impact/images/b/b1/Character_Shikanoin_Heizou_Full_Wish.png/revision/latest?cb=20220713042711.png'; //ascension material image?
+let asc = 3;
+let lvlvalue = 'meh';
+let type = 'char';
+
+//create new client instance
+client.on('ready', () => {
+    console.log('pls work');
+    client.user.setActivity('Yanfei supremacy');
+});
 
 //commands
 client.on('messageCreate', (message) =>
@@ -61,22 +63,28 @@ client.on('messageCreate', (message) =>
     }
 
     if (searchCommand(cmd) === 'embed'){
-        const plswork = embed.emBuild();
+        const plswork = embed.emBuild(title, url, desc, thumb, img, asc, lvlvalue, type);
         message.channel.send({ embeds: [plswork] });
     }
 
+    //return list of possible commands
     if (cmd === 'help'){
-        message.channel.send('wassup');
-        //return list of possible commands
-        //also return description
-            //i.e. how the bot works
+        message.channel.send({ embeds: [embed.helpBuild()] });
     }
 
     if (charArr.includes(cmd)){
+        scrape.characterMaterials();
+        //either scrape here and pass the results through to emBuild
+        //or call the scrape in embed class and pass it through immediately...
+
+        type = 'weapon';
         message.channel.send(cmd + ' found');
     }
 
     if (weaponArr.includes(cmd)){
+        scrape.weaponMaterials();
+
+        type = 'char';
         message.channel.send(cmd + ' found');
     }
 });
@@ -85,5 +93,5 @@ client.on('messageCreate', (message) =>
 client.login(token);
 
 //learn webscraping
-// https://medium.com/codex/learn-web-scraping-the-fun-way-with-a-discord-bot-704d3422a6a2
-//installed requests, find an equivalent for beautifulsoup
+    //https://www.youtube.com/watch?v=-3lqUHeZs_0&ab_channel=CodewithAniaKub%C3%B3w
+    //https://www.npmjs.com/package/crawler
