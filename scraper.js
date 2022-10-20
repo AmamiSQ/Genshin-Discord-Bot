@@ -1,3 +1,6 @@
+const cheerio = require('cheerio.js');
+const axios = require('axios.js');
+
 class WebScraper
 {
     constructor()
@@ -10,9 +13,15 @@ class WebScraper
     weaponScrape()
     {
         //use https://www.genshinlab.com/genshin-impact-weapon-list/
+        let newArr = [];
+
+        //insert code
+
+
+        return newArr;
     }
 
-    weaponMaterials()
+    weaponMaterials(search)
     {
 
     }
@@ -20,9 +29,15 @@ class WebScraper
     characterScrape()
     {
         //use genshin.gg
+        let newArr = [];
+
+        //insert code
+
+
+        return newArr;
     }
 
-    characterMaterials()
+    characterMaterials(search)
     {
 
     }

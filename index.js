@@ -56,23 +56,23 @@ client.on('messageCreate', (message) =>
         message.channel.send('pong!');
     }
 
-    if (cmd === 'shutdown'){
+    else if (cmd === 'shutdown'){
         message.channel.send('shutting down...').then(() => {
             client.destroy();
         })
     }
 
-    if (searchCommand(cmd) === 'embed'){
+    else if (cmd === 'embed'){
         const plswork = embed.emBuild(title, url, desc, thumb, img, asc, lvlvalue, type);
         message.channel.send({ embeds: [plswork] });
     }
 
     //return list of possible commands
-    if (cmd === 'help'){
+    else if (cmd === 'help'){
         message.channel.send({ embeds: [embed.helpBuild()] });
     }
 
-    if (charArr.includes(cmd)){
+    else if (charArr.includes(cmd) || charArr.includes(cmd + ' ' + args[0])){
         scrape.characterMaterials();
         //either scrape here and pass the results through to emBuild
         //or call the scrape in embed class and pass it through immediately...
@@ -81,7 +81,7 @@ client.on('messageCreate', (message) =>
         message.channel.send(cmd + ' found');
     }
 
-    if (weaponArr.includes(cmd)){
+    else if (weaponArr.includes(cmd) || weaponArr.includes(cmd + ' ' + args[0])){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
         scrape.weaponMaterials();
 
         type = 'char';
