@@ -16,11 +16,6 @@ let charArr = scrape.characterScrape();
 let weaponArr = scrape.weaponScrape(); 
 let ascLvl = [20, 30, 40, 50, 60, 70, 80, 90]; 
 
-//function to loop through web search, probably
-    //should also make an array for characters and weapons
-        //DONT HARDCODE
-        //also set to lower case when putting into the array
-
     /* 
     to take in !weapon lvl x y
     you need to write it like cmd === 'help' && args[0] === 'me'
@@ -77,21 +72,18 @@ client.on('messageCreate', (message) =>
         //either scrape here and pass the results through to emBuild
         //or call the scrape in embed class and pass it through immediately...
 
+        type = 'char';
+        message.channel.send(cmd + ' found');
+    }
+
+    else if (weaponArr.includes(cmd) || weaponArr.includes(cmd + ' ' + args[0]) || weaponArr.includes(cmd + ' ' + args[0] + ' ' + args[1])){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
+        scrape.weaponMaterials();
+
         type = 'weapon';
         message.channel.send(cmd + ' found');
     }
 
-    else if (weaponArr.includes(cmd) || weaponArr.includes(cmd + ' ' + args[0])){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
-        scrape.weaponMaterials();
-
-        type = 'char';
-        message.channel.send(cmd + ' found');
-    }
 });
 
 //logging in ( END OF FILE) //config in gitignore
 client.login(token);
-
-//learn webscraping
-    //https://www.youtube.com/watch?v=-3lqUHeZs_0&ab_channel=CodewithAniaKub%C3%B3w
-    //https://www.npmjs.com/package/crawler

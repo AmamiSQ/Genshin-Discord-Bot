@@ -1,5 +1,5 @@
-const cheerio = require('cheerio.js');
-const axios = require('axios.js');
+const cheerio = require('cheerio');
+const axios = require('axios');
 
 class WebScraper
 {
@@ -12,11 +12,18 @@ class WebScraper
 
     weaponScrape()
     {
-        //use https://www.genshinlab.com/genshin-impact-weapon-list/
         let newArr = [];
 
-        //insert code
+        axios('https://gamewith.net/genshin-impact/article/show/22641')
+            .then(response => {
+                const html = response.data;
+                const $ = cheerio.load(html);
 
+                $('.w-idb-element', html).each(function() {
+                   const name = $(this).attr('data-col1')
+                   newArr.push(name.toLowerCase());
+                })
+            })
 
         return newArr;
     }
@@ -28,18 +35,33 @@ class WebScraper
 
     characterScrape()
     {
-        //use genshin.gg
         let newArr = [];
 
-        //insert code
+        axios('https://genshin.gg/')
+            .then(response => {
+                const html = response.data;
+                const $ = cheerio.load(html);
 
+                $('.character-name', html).each(function() {
+                   const name = $(this).text();
+                   newArr.push(name.toLowerCase());
+                })
+            })
 
         return newArr;
     }
 
     characterMaterials(search)
     {
+        //maybe make multiple arrays for materials? idk
 
+        /* axios('https://genshin.gg/characters/' + search) //possibly, maybe look into a different site...
+            .then(response => {
+                const html = response.data;
+                const $ = cheerio.load(html);
+
+
+            }) */
     }
 }
 
