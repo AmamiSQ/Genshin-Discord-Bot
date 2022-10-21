@@ -14,7 +14,7 @@ const scrape = new WebScraper();
 //initialize arrays
 let charArr = scrape.characterScrape(); 
 let weaponArr = scrape.weaponScrape(); 
-let ascLvl = [20, 30, 40, 50, 60, 70, 80, 90]; 
+let ascLvl = [20, 40, 50, 60, 70, 80]; 
 
     /* 
     to take in !weapon lvl x y
@@ -32,6 +32,11 @@ let img = 'https://static.wikia.nocookie.net/gensin-impact/images/b/b1/Character
 let asc = 3;
 let lvlvalue = 'meh';
 let type = 'char';
+
+//conditions for the fucking weapons my god
+let con1 = args[0] == 'lvl' && ascLvl.includes(args[1]);
+let con2 = args[1] == 'lvl' && ascLvl.includes(args[2]);
+let con3 = args[2] == 'lvl' && ascLvl.includes(args[3]);
 
 //create new client instance
 client.on('ready', () => {
@@ -68,16 +73,23 @@ client.on('messageCreate', (message) =>
     }
 
     else if (charArr.includes(cmd) || charArr.includes(cmd + ' ' + args[0])){
-        scrape.characterMaterials();
-        //either scrape here and pass the results through to emBuild
-        //or call the scrape in embed class and pass it through immediately...
+        let character = '';
+
+        if (con1 || con2){
+            scrape.characterMaterials(character);
+        }
 
         type = 'char';
         message.channel.send(cmd + ' found');
     }
 
     else if (weaponArr.includes(cmd) || weaponArr.includes(cmd + ' ' + args[0]) || weaponArr.includes(cmd + ' ' + args[0] + ' ' + args[1])){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
-        scrape.weaponMaterials();
+        let weapon = '';
+        let lvlasc = 0;
+
+        if (con1 || con2 || con3){
+            scrape.weaponMaterials(weapon, lvlasc);
+        }
 
         type = 'weapon';
         message.channel.send(cmd + ' found');
