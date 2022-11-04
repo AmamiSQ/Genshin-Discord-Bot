@@ -14,19 +14,20 @@ class WebScraper
     imageScrape(search)
     {
         return new Promise((resolve, reject) => {
-            let newSearch = search.replace(/ /g, '-');
+            const url = 'https://genshin-impact.fandom.com/wiki/' + search;
 
-            axios('https://genshindb.org/characters/' + newSearch)
+            axios(url)
                 .then(response => {
                     const html = response.data;
                     const $ = cheerio.load(html);
-                    let imgUrl = 'bleh';
+                    let imgUrl = [];
 
-                    $('.wp-block-image', html).each(function() {
-                        const name = $(this).attr('a');
-                        imgUrl = name;
+                    $('.pi-image-thumbnail', html).each(function() {
+                        let name = $(this).attr('src');
+                        imgUrl.push(name + '.png');
+
                     })
-
+                    
                     resolve(imgUrl);
                 })
             

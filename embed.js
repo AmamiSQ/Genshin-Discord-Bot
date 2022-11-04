@@ -36,17 +36,16 @@ class EmbedClass
         }
     }
 
-    emBuild(title, url, description, thumbnail, image, type, arr)
+    emBuild(title, url, description, image, type, arr)
     {
         this.exampleEmbed = new EmbedBuilder()
             .setTitle(title)
             .setColor(0xFF33B8)
             .setURL(url)
             .setDescription(description)
-            .setThumbnail(thumbnail)
+            .setThumbnail('https://static.wikia.nocookie.net/gensin-impact/images/2/2a/Genshin-Impact-Logo.png/revision/latest/scale-to-width-down/1000?cb=20201013193256.png')
             .setImage(image)
             .setTimestamp()
-            .setFooter({ text: 'Source: <<addWebsite>>', iconURL: 'https://i.imgur.com/AfFp7pu.png' }); //maybe, or just maybe something fun
         
 
         this.fieldBuild(type, arr);

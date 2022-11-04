@@ -17,24 +17,7 @@ const scrape = new InfoScraper();
 //initialize arrays
 let charArr = scrape.characterScrape(); 
 let weaponArr = scrape.weaponScrape(); 
-let ascLvl = [20, 40, 50, 60, 70, 80]; 
-
-    /* 
-    to take in !weapon lvl x y
-    you need to write it like cmd === 'help' && args[0] === 'me'
-    figure something out/make a function to make it easier
-    especially for the ascension nums
-    */
-
-//values
-let title = 'Heizou';
-let url = 'https://discord.js.org/';
-let desc = 'bleh';
-let thumb = 'https://i.imgur.com/AfFp7pu.png'; //weapon/character img
-let img = 'https://static.wikia.nocookie.net/gensin-impact/images/b/b1/Character_Shikanoin_Heizou_Full_Wish.png/revision/latest?cb=20220713042711.png'; //ascension material image?
-let asc = 3;
-let lvlvalue = 'meh';
-let type = 'char';
+let ascLvl = ['1', '2', '3', '4', '5']; 
 
 //create new client instance
 client.on('ready', () => {
@@ -47,13 +30,11 @@ client.on('messageCreate', (message) =>
 {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    const args = message.content.slice(prefix.length);
-    const cmd = args.toLowerCase();
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const cmd = args.shift().toLowerCase();
 
     if (cmd === 'ping'){    
         message.channel.send('pong!');
-
-        console.log(genshindb.characters('heizou'));
 
     }
 
@@ -73,24 +54,52 @@ client.on('messageCreate', (message) =>
         message.channel.send({ embeds: [embed.helpBuild()] });
     }
 
-    else if (charArr.includes(cmd)){ //use includes to check for lvl
-        let search = cmd; //placeholder
+    else if (charArr.includes(cmd) || charArr.includes(cmd + ' ' + args[0])){
+        let search;
+        let lvl;
+        let type = 'char';
 
-        let temp = scrape.characterInfo(search);
-        let charInfo = temp[0];
-        let matArr = scrape.characterMaterials(search, 1);
+        console.log(args[0]);
+
+        if (ascLvl.includes(args[0]) || ascLvl.includes(args[1])){
+            if (charArr.includes(cmd)){
+                search = cmd;
+                lvl = args[0];
+                console.log('here');
+            }
+            else{
+                search = cmd + ' ' + args[0];
+                lvl = args[1];
+                console.log('no here');
+            }
+        }
+        else{
+            console.log('you fucked up');
+            if (charArr.includes(cmd)){
+                search = cmd;
+            }
+            else{
+                search = cmd + ' ' + args[0];
+            }
+            lvl = '1'; //placeholder
+        }
+        //figure out a way to optimize the above block bc this is just hideous
+
+        scrape.characterInfo(search).then((arr) => {
+            let charInfo = arr[0];
+            let matArr = scrape.characterMaterials(search, lvl);
+
+            const plswork = embed.emBuild(charInfo['title'], charInfo['url'], charInfo['description'], charInfo['image'], type, matArr);
+            message.channel.send({ embeds: [plswork] });
         
-        const plswork = embed.emBuild(charInfo['title'], url, charInfo['description'], thumb, charInfo['image'], type, matArr);
-        message.channel.send({ embeds: [plswork] });
-
-        //works, except the images are ugly af so need to find a solution for that
-            //also play around with commands bc now it only takes the character names
+        });
         
     }
 
     else if (weaponArr.includes(cmd)){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
         let weapon = '';
         let lvlasc = 0;
+        let type = 'weapon';
 
         /* if (con1 || con2 || con3){
             scrape.weaponMaterials(weapon, lvlasc);
