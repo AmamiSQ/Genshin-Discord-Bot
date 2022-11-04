@@ -2,14 +2,17 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { EmbedClass } = require('./embed.js');
-const { WebScraper } = require('./scraper.js');
+//const { WebScraper } = require('./scraper.js');
+const { InfoScraper } = require('./genshindb.js');
+
+const genshindb = require('genshin-db');
 
 const prefix = '!';
 
 //initialize classes
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const embed = new EmbedClass();
-const scrape = new WebScraper();
+const scrape = new InfoScraper();
 
 //initialize arrays
 let charArr = scrape.characterScrape(); 
@@ -33,7 +36,6 @@ let asc = 3;
 let lvlvalue = 'meh';
 let type = 'char';
 
-
 //create new client instance
 client.on('ready', () => {
     console.log('pls work');
@@ -50,6 +52,8 @@ client.on('messageCreate', (message) =>
 
     if (cmd === 'ping'){    
         message.channel.send('pong!');
+
+        console.log(genshindb.characters('heizou'));
 
     }
 
@@ -70,16 +74,18 @@ client.on('messageCreate', (message) =>
     }
 
     else if (charArr.includes(cmd)){ //use includes to check for lvl
-        let search = cmd.replace(/ /g, '-');
+        let search = cmd; //placeholder
 
-        title = cmd;
-        type = 'char';
-
-        //need to figure out how to get this in order ffs....
-        //const plswork = embed.emBuild(title, url, desc, thumb, img, 20, type); //crashes bc js FUCKING SUCKS
+        let temp = scrape.characterInfo(search);
+        let charInfo = temp[0];
+        let matArr = scrape.characterMaterials(search, 1);
         
-        //message.channel.send({ embeds: [plswork] });
-        console.log(scrape.characterMaterials(search));
+        const plswork = embed.emBuild(charInfo['title'], url, charInfo['description'], thumb, charInfo['image'], type, matArr);
+        message.channel.send({ embeds: [plswork] });
+
+        //works, except the images are ugly af so need to find a solution for that
+            //also play around with commands bc now it only takes the character names
+        
     }
 
     else if (weaponArr.includes(cmd)){ //oh fuck me weapons like primordial WINGED jade spear exist -,-

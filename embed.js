@@ -9,7 +9,7 @@ class EmbedClass
         this.exampleEmbed;
     }
 
-    fieldBuild(asc, type) //probably need to redo this one
+    fieldBuild(type, arr) //probably need to redo this one
     {
         //base fields
         let exp;
@@ -23,30 +23,20 @@ class EmbedClass
         this.exampleEmbed
             .addFields( 
                 { name: exp, value: 'something', inline: true },
-                { name: 'Mora', value: 'something', inline: true }, 
+                { name: 'Mora', value: arr[0]['count'].toString(), inline: true }, 
                 { name: '\u200B', value: '\u200B' },
             );
         
         
         //additional fields (depending on ascension level)
-        if (asc == 20){
-            for(let i = 0; i<3; i++)
-            {
-                this.exampleEmbed
-                    .addFields( { name: 'yo', value: 'ffs', inline: true } );
-            };
-        }
-        else{
-            for(let i = 0; i<4; i++)
-            {
-                this.exampleEmbed
-                    .addFields( { name: 'Inline field title', value: 'Some value here', inline: true } );
-                    //.addFields( { name: name, value: matvalue, inline: true } );
-            };
+        for(let i = 1; i<arr.length; i++)
+        {
+            this.exampleEmbed
+                .addFields( { name: arr[i]['name'], value: arr[i]['count'].toString(), inline: true } );
         }
     }
 
-    emBuild(title, url, description, thumbnail, image, asc, type)
+    emBuild(title, url, description, thumbnail, image, type, arr)
     {
         this.exampleEmbed = new EmbedBuilder()
             .setTitle(title)
@@ -59,7 +49,7 @@ class EmbedClass
             .setFooter({ text: 'Source: <<addWebsite>>', iconURL: 'https://i.imgur.com/AfFp7pu.png' }); //maybe, or just maybe something fun
         
 
-        this.fieldBuild(asc, type);
+        this.fieldBuild(type, arr);
 
         return this.exampleEmbed;
     }
@@ -74,9 +64,9 @@ class EmbedClass
                 { name: '\u200B', value: '\u200B' },
                 { name: '!help', value: 'Shows the command list', inline: false },
                 { name: '!character', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
-                { name: '!character 40', value: 'Shows materials needed to level from 30 to 40', inline: false },
+                { name: '!character 1', value: 'Shows materials needed for first ascension', inline: false },
                 { name: '!weapon', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
-                { name: '!weapon 50', value: 'Shows materials needed to level from 40 to 50', inline: false },
+                { name: '!weapon 4', value: 'Shows materials needed for fourth ascension', inline: false },
                 { name: '!ping', value: 'pong!', inline: false },
             )
             .setTimestamp()
