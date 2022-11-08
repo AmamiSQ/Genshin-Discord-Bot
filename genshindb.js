@@ -33,6 +33,7 @@ class InfoScraper
         let oldArr = genshindb.characters('names', { matchCategories: true });
 
         oldArr.forEach((item) => {
+            item = item.replace(/ /g, '-')
             newArr.push(item.toLowerCase());
         });
 
@@ -41,13 +42,14 @@ class InfoScraper
 
     characterMaterials(search, lvl)
     {
-        let oldArr = genshindb.characters(search).costs;
+        let oldArr = genshindb.characters(search.replace(/-/g, ' ')).costs;
         let newArr = [];
         
         switch(lvl) 
         {
             case '1':
                 newArr = oldArr['ascend1'];
+                console.log(oldArr);
                 return newArr;
             case '2':
                 newArr = oldArr['ascend2'];
@@ -61,9 +63,17 @@ class InfoScraper
             case '5':
                 newArr = oldArr['ascend5'];
                 return newArr;
+            case '6':
+                newArr = oldArr['ascend6'];
+                return newArr;
+            case '7':
+                let length = Object.keys(oldArr).length;
+                
+                let temp = [];
+                //insert method for counting all resources
+                
+                break;
         }
-
-        return newArr;
         
     }
 
@@ -72,11 +82,11 @@ class InfoScraper
         return new Promise((resolve, reject) => {
             //regex for capitalization so the url works properly
             let capitalize = match => match.toUpperCase();
-            let newSearch = search.replace(/(^\w{1})|(\s{1}\w{1})/g, capitalize);
-            newSearch = newSearch.replace(/ /g, '_');
+            let newSearch = search.replace(/(\b[a-z](?!\s))/g, capitalize);
+            newSearch = newSearch.replace(/-/g, '_');
             
             scraper.imageScrape(newSearch).then((result) => {
-                let info = genshindb.characters(search);
+                let info = genshindb.characters(search.replace(/-/g, ' '));
 
                 let newArr = [
                     {

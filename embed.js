@@ -22,7 +22,7 @@ class EmbedClass
 
         this.exampleEmbed
             .addFields( 
-                { name: exp, value: 'something', inline: true },
+                //{ name: exp, value: 'something', inline: true }, maybe, maybe not
                 { name: 'Mora', value: arr[0]['count'].toString(), inline: true }, 
                 { name: '\u200B', value: '\u200B' },
             );
@@ -63,9 +63,9 @@ class EmbedClass
                 { name: '\u200B', value: '\u200B' },
                 { name: '!help', value: 'Shows the command list', inline: false },
                 { name: '!character', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
-                { name: '!character 1', value: 'Shows materials needed for first ascension', inline: false },
+                { name: '!character 1', value: 'Shows materials needed for first (lvl 20) ascension', inline: false },
                 { name: '!weapon', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
-                { name: '!weapon 4', value: 'Shows materials needed for fourth ascension', inline: false },
+                { name: '!weapon 4', value: 'Shows materials needed for fourth (lvl 60) ascension', inline: false },
                 { name: '!ping', value: 'pong!', inline: false },
             )
             .setTimestamp()

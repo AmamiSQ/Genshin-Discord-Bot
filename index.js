@@ -17,7 +17,7 @@ const scrape = new InfoScraper();
 //initialize arrays
 let charArr = scrape.characterScrape(); 
 let weaponArr = scrape.weaponScrape(); 
-let ascLvl = ['1', '2', '3', '4', '5']; 
+let ascLvl = ['1', '2', '3', '4', '5', '6']; 
 
 //create new client instance
 client.on('ready', () => {
@@ -54,36 +54,20 @@ client.on('messageCreate', (message) =>
         message.channel.send({ embeds: [embed.helpBuild()] });
     }
 
-    else if (charArr.includes(cmd) || charArr.includes(cmd + ' ' + args[0])){
+    //return characters
+    else if (charArr.includes(cmd)){
         let search;
         let lvl;
         let type = 'char';
 
-        console.log(args[0]);
-
-        if (ascLvl.includes(args[0]) || ascLvl.includes(args[1])){
-            if (charArr.includes(cmd)){
-                search = cmd;
-                lvl = args[0];
-                console.log('here');
-            }
-            else{
-                search = cmd + ' ' + args[0];
-                lvl = args[1];
-                console.log('no here');
-            }
+        if (ascLvl.includes(args[0])){
+            search = cmd;
+            lvl = args[0];
         }
         else{
-            console.log('you fucked up');
-            if (charArr.includes(cmd)){
-                search = cmd;
-            }
-            else{
-                search = cmd + ' ' + args[0];
-            }
-            lvl = '1'; //placeholder
+            search = cmd;
+            lvl = '7';
         }
-        //figure out a way to optimize the above block bc this is just hideous
 
         scrape.characterInfo(search).then((arr) => {
             let charInfo = arr[0];
@@ -96,6 +80,7 @@ client.on('messageCreate', (message) =>
         
     }
 
+    //return weapons
     else if (weaponArr.includes(cmd)){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
         let weapon = '';
         let lvlasc = 0;
