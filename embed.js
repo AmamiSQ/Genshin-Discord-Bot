@@ -67,6 +67,8 @@ class EmbedClass
                 { name: '!weapon', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
                 { name: '!weapon 4', value: 'Shows materials needed for fourth (lvl 60) ascension', inline: false },
                 { name: '!ping', value: 'pong!', inline: false },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Please note when searching with spaces', value: 'search for !kaedehara-kazuha or !primordial-winged-jade-spear', inline: false },
             )
             .setTimestamp()
             .setFooter({ text: 'Source: <<addWebsite>>', iconURL: 'https://i.imgur.com/AfFp7pu.png' }); //maybe, or just maybe something fun

@@ -1,4 +1,5 @@
 const genshindb = require('genshin-db');
+const { isConditionalExpression } = require('typescript');
 const { WebScraper } = require('./scraper.js');
 const scraper = new WebScraper();
 
@@ -49,7 +50,6 @@ class InfoScraper
         {
             case '1':
                 newArr = oldArr['ascend1'];
-                console.log(oldArr);
                 return newArr;
             case '2':
                 newArr = oldArr['ascend2'];
@@ -69,10 +69,30 @@ class InfoScraper
             case '7':
                 let length = Object.keys(oldArr).length;
                 
-                let temp = [];
-                //insert method for counting all resources
+                for (let i = 1; i<length+1; i++)
+                {
+                    let objArray = oldArr['ascend' + i];
+
+                    for(let j = 0; j<objArray.length; j++)
+                    {
+                        let tempName = objArray[j]['name'];
+                        let tempCount = objArray[j]['count'];
+
+                        if (newArr.find(e => e.name === tempName)) {
+                            for (let k = 0; k<newArr.length; k++)
+                            {
+                                if(newArr[k]['name'] == tempName){
+                                    newArr[k]['count']+= tempCount;
+                                }
+                            }
+                        }
+                        else {
+                            newArr.push({'name': tempName, 'count': tempCount});
+                        }
+                    }
+                }
                 
-                break;
+                return newArr;
         }
         
     }
