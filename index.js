@@ -2,10 +2,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { EmbedClass } = require('./embed.js');
-//const { WebScraper } = require('./scraper.js');
 const { InfoScraper } = require('./genshindb.js');
-
-const genshindb = require('genshin-db');
 
 const prefix = '!';
 
@@ -32,6 +29,7 @@ client.on('messageCreate', (message) =>
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
+    const second_cmd = args[0];
 
     if (cmd === 'ping'){    
         message.channel.send('pong!');
@@ -44,11 +42,6 @@ client.on('messageCreate', (message) =>
         })
     }
 
-    else if (cmd === 'embed'){
-        const plswork = embed.emBuild(title, url, desc, thumb, img, asc, lvlvalue, type);
-        message.channel.send({ embeds: [plswork] });
-    }
-
     //return list of possible commands
     else if (cmd === 'help'){
         message.channel.send({ embeds: [embed.helpBuild()] });
@@ -56,42 +49,75 @@ client.on('messageCreate', (message) =>
 
     //return characters
     else if (charArr.includes(cmd)){
-        let search;
+        let search = cmd;
         let lvl;
-        let type = 'char';
 
-        if (ascLvl.includes(args[0])){
-            search = cmd;
-            lvl = args[0];
+        if (args[1] == null){
+            if (ascLvl.includes(second_cmd)){
+                lvl = second_cmd;
+            }
+            else if (second_cmd == null){
+                lvl = '7';
+            }
+            else{
+                lvl = 'bad';
+            }
         }
         else{
-            search = cmd;
-            lvl = '7';
+            lvl = 'bad';
         }
 
-        scrape.characterInfo(search).then((arr) => {
-            let charInfo = arr[0];
-            let matArr = scrape.characterMaterials(search, lvl);
-
-            const plswork = embed.emBuild(charInfo['title'], charInfo['url'], charInfo['description'], charInfo['image'], type, matArr);
-            message.channel.send({ embeds: [plswork] });
+        if (lvl != 'bad'){
+            scrape.searchInfo(search, 'char').then((arr) => {
+                let charInfo = arr[0];
+                let matArr = scrape.ascensionMaterials(search, lvl, 'char');
+    
+                const plswork = embed.emBuild(charInfo['title'], charInfo['url'], charInfo['description'], charInfo['image'], matArr);
+                message.channel.send({ embeds: [plswork] });
+            
+            });
+        }
+        else{
+            message.channel.send("Invalid argument");
+        }
         
-        });
         
     }
 
     //return weapons
-    else if (weaponArr.includes(cmd)){ //oh fuck me weapons like primordial WINGED jade spear exist -,-
-        let weapon = '';
-        let lvlasc = 0;
-        let type = 'weapon';
+    else if (weaponArr.includes(cmd)){
+        let search = cmd;
+        let lvl;
 
-        /* if (con1 || con2 || con3){
-            scrape.weaponMaterials(weapon, lvlasc);
-        } */
+        if (args[1] == null){
+            if (ascLvl.includes(second_cmd)){
+                lvl = second_cmd;
+            }
+            else if (second_cmd == null){
+                lvl = '7';
+            }
+            else{
+                lvl = 'bad';
+            }
+        }
+        else{
+            lvl = 'bad';
+        }
 
-        type = 'weapon';
-        message.channel.send(cmd + ' found');
+        if (lvl != 'bad'){
+            scrape.searchInfo(search, 'weapon').then((arr) => {
+                let weaponInfo = arr[0];
+                let matArr = scrape.ascensionMaterials(search, lvl, 'weapon');
+    
+                const plswork = embed.emBuild(weaponInfo['title'], weaponInfo['url'], weaponInfo['description'], weaponInfo['image'], matArr);
+                message.channel.send({ embeds: [plswork] });
+            
+            });
+        }
+        else{
+            message.channel.send("Invalid argument");
+        }
+
     }
 
 });

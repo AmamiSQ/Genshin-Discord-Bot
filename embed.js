@@ -9,16 +9,16 @@ class EmbedClass
         this.exampleEmbed;
     }
 
-    fieldBuild(type, arr) //probably need to redo this one
+    fieldBuild(arr) //probably need to redo this one
     {
         //base fields
-        let exp;
+        /* let exp;
         if (type == 'char'){
             exp = 'Exp books';
         }
         else{
             exp = 'Enhancement Ore';
-        }
+        } */
 
         this.exampleEmbed
             .addFields( 
@@ -36,7 +36,7 @@ class EmbedClass
         }
     }
 
-    emBuild(title, url, description, image, type, arr)
+    emBuild(title, url, description, image, arr)
     {
         this.exampleEmbed = new EmbedBuilder()
             .setTitle(title)
@@ -48,7 +48,7 @@ class EmbedClass
             .setTimestamp()
         
 
-        this.fieldBuild(type, arr);
+        this.fieldBuild(arr);
 
         return this.exampleEmbed;
     }
@@ -62,13 +62,13 @@ class EmbedClass
             .addFields(
                 { name: '\u200B', value: '\u200B' },
                 { name: '!help', value: 'Shows the command list', inline: false },
-                { name: '!character', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
+                { name: '!character', value: 'Shows all the materials needed to level to 90', inline: false },
                 { name: '!character 1', value: 'Shows materials needed for first (lvl 20) ascension', inline: false },
-                { name: '!weapon', value: 'Shows base stats and all the materials needed to level to 90 (?)', inline: false },
+                { name: '!weapon', value: 'Shows all the materials needed to level to 90', inline: false },
                 { name: '!weapon 4', value: 'Shows materials needed for fourth (lvl 60) ascension', inline: false },
                 { name: '!ping', value: 'pong!', inline: false },
                 { name: '\u200B', value: '\u200B' },
-                { name: 'Please note when searching with spaces', value: 'search for !kaedehara-kazuha or !primordial-winged-jade-spear', inline: false },
+                { name: 'Please note when searching with spaces', value: 'search for !kaedehara_kazuha or !primordial_jade_winged-spear', inline: false },
             )
             .setTimestamp()
             .setFooter({ text: 'Source: <<addWebsite>>', iconURL: 'https://i.imgur.com/AfFp7pu.png' }); //maybe, or just maybe something fun

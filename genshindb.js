@@ -17,15 +17,11 @@ class InfoScraper
         let oldArr = genshindb.weapons('names', { matchCategories: true });
 
         oldArr.forEach((item) => {
+            item = item.replace(/ /g, '_');
             newArr.push(item.toLowerCase());
         });
 
         return newArr;
-    }
-
-    weaponMaterials(search)
-    {
-
     }
 
     characterScrape()
@@ -34,16 +30,24 @@ class InfoScraper
         let oldArr = genshindb.characters('names', { matchCategories: true });
 
         oldArr.forEach((item) => {
-            item = item.replace(/ /g, '-')
+            item = item.replace(/ /g, '_')
             newArr.push(item.toLowerCase());
         });
 
         return newArr;
     }
 
-    characterMaterials(search, lvl)
+    ascensionMaterials(search, lvl, type)
     {
-        let oldArr = genshindb.characters(search.replace(/-/g, ' ')).costs;
+        let oldArr;
+
+        if (type == 'char'){
+            oldArr = genshindb.characters(search.replace(/_/g, ' ')).costs;
+        }
+        else{
+            oldArr = genshindb.weapons(search.replace(/_/g, ' ')).costs;
+        }
+        
         let newArr = [];
         
         switch(lvl) 
@@ -97,23 +101,31 @@ class InfoScraper
         
     }
 
-    characterInfo(search)
+    searchInfo(search, type)
     {
         return new Promise((resolve, reject) => {
             //regex for capitalization so the url works properly
             let capitalize = match => match.toUpperCase();
-            let newSearch = search.replace(/(\b[a-z](?!\s))/g, capitalize);
-            newSearch = newSearch.replace(/-/g, '_');
+            let newSearch = search.replace(/_/g, ' ');
+            newSearch = newSearch.replace(/(\b[a-z](?!\s))/g, capitalize);
+            newSearch = newSearch.replace(/ /g, '_');
             
+            let info;
+
+            if (type == 'char'){
+                info = genshindb.characters(search.replace(/_/g, ' '));
+            }
+            else{
+                info = genshindb.weapons(search.replace(/_/g, ' '));
+            }
+
             scraper.imageScrape(newSearch).then((result) => {
-                let info = genshindb.characters(search.replace(/-/g, ' '));
 
                 let newArr = [
                     {
                         'title': info['name'],
                         'url': info['url'],
                         'description': info['description'],
-                        //'thumbnail': 'bleh',
                         'image': result[1],
                         'url': 'https://genshin-impact.fandom.com/wiki/' + newSearch,
     
