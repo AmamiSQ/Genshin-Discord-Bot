@@ -36,12 +36,6 @@ client.on('messageCreate', (message) =>
 
     }
 
-    else if (cmd === 'shutdown'){
-        message.channel.send('shutting down...').then(() => {
-            client.destroy();
-        })
-    }
-
     //return list of possible commands
     else if (cmd === 'help'){
         message.channel.send({ embeds: [embed.helpBuild()] });
@@ -119,6 +113,12 @@ client.on('messageCreate', (message) =>
         }
 
     }
+
+    /* else if (cmd === 'shutdown'){
+        message.channel.send('shutting down...').then(() => {
+            client.destroy();
+        })
+    } */
 
 });
 
