@@ -72,7 +72,7 @@ client.on('messageCreate', (message) =>
             });
         }
         else{
-            message.channel.send("Invalid argument");
+            message.channel.send("Invalid argument, use !help to see valid commands");
         }
         
         
@@ -109,7 +109,7 @@ client.on('messageCreate', (message) =>
             });
         }
         else{
-            message.channel.send("Invalid argument");
+            message.channel.send("Invalid argument, use !help to see valid commands");
         }
 
     }
