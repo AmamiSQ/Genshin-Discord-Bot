@@ -123,4 +123,4 @@ client.on('messageCreate', (message) =>
 });
 
 //logging in ( END OF FILE) //config in gitignore
-client.login(process.env.token);
+client.login(token);
