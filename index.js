@@ -114,11 +114,11 @@ client.on('messageCreate', (message) =>
 
     }
 
-    /* else if (cmd === 'shutdown'){
+    else if (cmd === 'shutdown'){
         message.channel.send('shutting down...').then(() => {
             client.destroy();
         })
-    } */
+    }
 
 });
 
