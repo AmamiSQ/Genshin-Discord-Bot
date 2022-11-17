@@ -1,5 +1,4 @@
-const cheerio = require('cheerio'),
-    cheerioTableParser = require('cheerio-tableparser');
+const cheerio = require('cheerio');
 const axios = require('axios');
 
 

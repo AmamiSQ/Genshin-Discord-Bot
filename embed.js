@@ -1,6 +1,4 @@
 const { EmbedBuilder } = require('discord.js');
-const { WebScraper } = require('./scraper.js');
-const scrape = new WebScraper();
 
 class EmbedClass
 {
@@ -9,20 +7,10 @@ class EmbedClass
         this.exampleEmbed;
     }
 
-    fieldBuild(arr) //probably need to redo this one
+    fieldBuild(arr)
     {
-        //base fields
-        /* let exp;
-        if (type == 'char'){
-            exp = 'Exp books';
-        }
-        else{
-            exp = 'Enhancement Ore';
-        } */
-
         this.exampleEmbed
             .addFields( 
-                //{ name: exp, value: 'something', inline: true }, maybe, maybe not
                 { name: 'Mora', value: arr[0]['count'].toString(), inline: true }, 
                 { name: '\u200B', value: '\u200B' },
             );
@@ -64,6 +52,7 @@ class EmbedClass
                 { name: '!help', value: 'Shows the command list', inline: false },
                 { name: '!character', value: 'Shows all the materials needed to level to 90', inline: false },
                 { name: '!character 1', value: 'Shows materials needed for first (lvl 20) ascension', inline: false },
+                //{ name: '!character artifacts', value: 'Gives best artifact set and stats(?) for given character'}, (TBA)
                 { name: '!weapon', value: 'Shows all the materials needed to level to 90', inline: false },
                 { name: '!weapon 4', value: 'Shows materials needed for fourth (lvl 60) ascension', inline: false },
                 { name: '!ping', value: 'pong!', inline: false },
@@ -71,7 +60,6 @@ class EmbedClass
                 { name: 'Please note when searching with spaces', value: 'search for !kaedehara_kazuha or !primordial_jade_winged-spear', inline: false },
             )
             .setTimestamp()
-            .setFooter({ text: 'Source: <<addWebsite>>', iconURL: 'https://i.imgur.com/AfFp7pu.png' }); //maybe, or just maybe something fun
         
         return this.exampleEmbed;
     }
