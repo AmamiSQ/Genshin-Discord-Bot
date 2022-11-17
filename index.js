@@ -12,8 +12,8 @@ const embed = new EmbedClass();
 const scrape = new InfoScraper();
 
 //initialize arrays
-let charArr = scrape.characterScrape(); 
-let weaponArr = scrape.weaponScrape(); 
+let charArr = scrape.arrayScrape('char'); 
+let weaponArr = scrape.arrayScrape('weapon'); 
 let ascLvl = ['1', '2', '3', '4', '5', '6']; 
 
 //create new client instance

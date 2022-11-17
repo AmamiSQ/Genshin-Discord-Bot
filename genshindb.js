@@ -1,33 +1,21 @@
 const genshindb = require('genshin-db');
-const { isConditionalExpression } = require('typescript');
 const { WebScraper } = require('./scraper.js');
 const scraper = new WebScraper();
 
 class InfoScraper
 {
-    constructor()
-    {
-        this.expVal = 0;
-        this.moraVal = 0;
-    }
 
-    weaponScrape()
+    arrayScrape(type)
     {
         let newArr = [];
-        let oldArr = genshindb.weapons('names', { matchCategories: true });
-
-        oldArr.forEach((item) => {
-            item = item.replace(/ /g, '_');
-            newArr.push(item.toLowerCase());
-        });
-
-        return newArr;
-    }
-
-    characterScrape()
-    {
-        let newArr = [];
-        let oldArr = genshindb.characters('names', { matchCategories: true });
+        let oldArr; 
+        
+        if (type == 'char'){
+            oldArr = genshindb.characters('names', { matchCategories: true });
+        }
+        else{
+            oldArr = genshindb.weapons('names', { matchCategories: true });
+        }
 
         oldArr.forEach((item) => {
             item = item.replace(/ /g, '_')
@@ -108,16 +96,17 @@ class InfoScraper
             let capitalize = match => match.toUpperCase();
             let newSearch = search.replace(/_/g, ' ');
             newSearch = newSearch.replace(/(\b[a-z](?!\s))/g, capitalize);
-            newSearch = newSearch.replace(/ /g, '_');
             
             let info;
 
             if (type == 'char'){
-                info = genshindb.characters(search.replace(/_/g, ' '));
+                info = genshindb.characters(newSearch);
             }
             else{
-                info = genshindb.weapons(search.replace(/_/g, ' '));
+                info = genshindb.weapons(newSearch);
             }
+
+            newSearch = newSearch.replace(/ /g, '_');
 
             scraper.imageScrape(newSearch).then((result) => {
 
