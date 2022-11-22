@@ -41,6 +41,10 @@ client.on('messageCreate', (message) =>
         message.channel.send({ embeds: [embed.helpBuild()] });
     }
 
+    else if (charArr.includes(cmd) && args[0] === 'artifacts'){
+        message.channel.send('not yet implemented');
+    }
+
     //return characters
     else if (charArr.includes(cmd)){
         let search = cmd;
