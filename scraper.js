@@ -27,7 +27,6 @@ class WebScraper
                         imgUrl.push(name + '.png');
 
                     })
-
                     resolve(imgUrl);
                 })
             

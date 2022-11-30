@@ -110,12 +110,14 @@ class InfoScraper
 
             scraper.imageScrape(newSearch).then((result) => {
 
+                let imgurl = (newSearch == 'Lumine' || newSearch == 'Aether') ? result[0] : result[1];
+
                 let newArr = [
                     {
                         'title': info['name'],
                         'url': info['url'],
                         'description': info['description'],
-                        'image': result[1],
+                        'image': imgurl,
                         'url': 'https://genshin-impact.fandom.com/wiki/' + newSearch,
     
                     }
