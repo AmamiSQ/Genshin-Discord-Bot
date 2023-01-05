@@ -14,6 +14,7 @@ class WebScraper
             if (search.includes('The')){
                 search = search.replace(/The/g, 'the');
             }
+            
             const url = 'https://genshin-impact.fandom.com/wiki/' + search;
 
             axios(url)

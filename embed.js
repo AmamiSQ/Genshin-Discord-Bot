@@ -52,13 +52,25 @@ class EmbedClass
                 { name: '!help', value: 'Shows the command list', inline: false },
                 { name: '!character', value: 'Shows all the materials needed to level to 90', inline: false },
                 { name: '!character 1', value: 'Shows materials needed for first (lvl 20) ascension', inline: false },
-                //{ name: '!character artifacts', value: 'Gives best artifact set and stats(?) for given character'}, (TBA)
+                //{ name: '!character artifacts', value: 'Gives best artifact set and stats(?) for given character'}, (TBA)(LMAO)
                 { name: '!weapon', value: 'Shows all the materials needed to level to 90', inline: false },
                 { name: '!weapon 4', value: 'Shows materials needed for fourth (lvl 60) ascension', inline: false },
+                { name: '!random character/boss', value: 'Returns a random character or boss', inline: false },
                 { name: '!ping', value: 'pong!', inline: false },
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Please note when searching with spaces', value: 'search for !kaedehara_kazuha or !primordial_jade_winged-spear', inline: false },
             )
+            .setTimestamp()
+        
+        return this.exampleEmbed;
+    }
+
+    spinBuild(url)
+    {
+        this.exampleEmbed = new EmbedBuilder()
+            .setTitle('You spun: ')
+            .setColor(0x008B8B)
+            .setImage(url)
             .setTimestamp()
         
         return this.exampleEmbed;

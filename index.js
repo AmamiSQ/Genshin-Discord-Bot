@@ -3,6 +3,7 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { EmbedClass } = require('./embed.js');
 const { InfoScraper } = require('./genshindb.js');
+const { Wheel } = require('./spinWheel.js');
 
 const prefix = '!';
 
@@ -10,6 +11,7 @@ const prefix = '!';
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const embed = new EmbedClass();
 const scrape = new InfoScraper();
+const wheel = new Wheel();
 
 //initialize arrays
 let charArr = scrape.arrayScrape('char'); 
@@ -50,16 +52,11 @@ client.on('messageCreate', (message) =>
         let search = cmd;
         let lvl;
 
-        if (args[1] == null){
-            if (ascLvl.includes(second_cmd)){
-                lvl = second_cmd;
-            }
-            else if (second_cmd == null){
-                lvl = '7';
-            }
-            else{
-                lvl = 'bad';
-            }
+        if (ascLvl.includes(second_cmd)){
+            lvl = second_cmd;
+        }
+        else if (second_cmd == null){
+            lvl = '7';
         }
         else{
             lvl = 'bad';
@@ -87,16 +84,11 @@ client.on('messageCreate', (message) =>
         let search = cmd;
         let lvl;
 
-        if (args[1] == null){
-            if (ascLvl.includes(second_cmd)){
-                lvl = second_cmd;
-            }
-            else if (second_cmd == null){
-                lvl = '7';
-            }
-            else{
-                lvl = 'bad';
-            }
+        if (ascLvl.includes(second_cmd)){
+            lvl = second_cmd;
+        }
+        else if (second_cmd == null){
+            lvl = '7';
         }
         else{
             lvl = 'bad';
@@ -122,6 +114,32 @@ client.on('messageCreate', (message) =>
         message.channel.send('shutting down...').then(() => {
             client.destroy();
         })
+    }
+
+    else if (cmd === 'random'){
+        const accepted = ['boss', 'character'];
+
+        if (!accepted.includes(args[0])) {
+            message.channel.send("Invalid argument, use !help to see valid commands");
+
+        }
+        else{
+            let url;
+
+            if (args[0] === 'character') {
+                url = wheel.capUrl('char');
+            }
+            else {
+                url = wheel.capUrl('boss');
+
+            }
+
+            wheel.wheelSpin(url).then((result) => {
+
+                const plswork = embed.spinBuild(result);
+                message.channel.send({ embeds: [plswork] });
+            });
+        }
     }
 
 });
