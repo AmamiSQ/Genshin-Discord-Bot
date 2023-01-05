@@ -28,6 +28,7 @@ class Wheel
         return newArr;
     }
 
+    //returns a random character or boss
     wheelSpin(array)
     {
         //randomizes array
