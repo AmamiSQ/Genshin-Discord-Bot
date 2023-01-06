@@ -41,6 +41,17 @@ class EmbedClass
         return this.exampleEmbed;
     }
 
+    spinBuild(url)
+    {
+        this.exampleEmbed = new EmbedBuilder()
+            .setTitle('You spun: ')
+            .setColor(0x64FF33)
+            .setImage(url)
+            .setTimestamp()
+        
+        return this.exampleEmbed;
+    }
+
     helpBuild()
     {
         this.exampleEmbed = new EmbedBuilder()
@@ -60,17 +71,6 @@ class EmbedClass
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Please note when searching with spaces', value: 'search for !kaedehara_kazuha or !primordial_jade_winged-spear', inline: false },
             )
-            .setTimestamp()
-        
-        return this.exampleEmbed;
-    }
-
-    spinBuild(url)
-    {
-        this.exampleEmbed = new EmbedBuilder()
-            .setTitle('You spun: ')
-            .setColor(0x008B8B)
-            .setImage(url)
             .setTimestamp()
         
         return this.exampleEmbed;
