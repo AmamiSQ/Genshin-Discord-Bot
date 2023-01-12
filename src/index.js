@@ -1,9 +1,9 @@
 //initialize params
 const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const { EmbedClass } = require('./embed.js');
-const { InfoScraper } = require('./genshindb.js');
-const { Wheel } = require('./spinWheel.js');
+const { EmbedClass } = require('./classes/embed.js');
+const { InfoScraper } = require('./classes/genshindb.js');
+const { Wheel } = require('./classes/spinWheel.js');
 
 const prefix = '!';
 
