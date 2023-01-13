@@ -36,6 +36,9 @@ client.on('messageCreate', (message) =>
     let search = cmd;
     let lvl;
 
+    //default function
+    var wrongInput = () => message.channel.send("Invalid argument, use !help to see valid commands");
+
     switch(true)
     {
         case cmd === 'ping':
@@ -75,7 +78,7 @@ client.on('messageCreate', (message) =>
                 });
             }
             else{
-                message.channel.send("Invalid argument, use !help to see valid commands");
+                wrongInput();
             }
             break;
         //return weapons
@@ -112,7 +115,7 @@ client.on('messageCreate', (message) =>
             const accepted = ['boss', 'character'];
 
             if (!accepted.includes(args[0])) {
-                message.channel.send("Invalid argument, use !help to see valid commands");
+                wrongInput();
 
             }
             else{
@@ -140,7 +143,7 @@ client.on('messageCreate', (message) =>
             })
             break;
         default:
-            message.channel.send("Invalid argument, use !help to see valid commands");
+            wrongInput();
             break;
 
     }
