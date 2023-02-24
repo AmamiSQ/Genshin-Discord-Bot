@@ -37,29 +37,15 @@ class InfoScraper
         }
         
         let newArr = [];
+        let ascLvl = ['1', '2', '3', '4', '5', '6']; 
         
-        switch(lvl) 
-        {
-            case '1':
-                newArr = oldArr['ascend1'];
-                return newArr;
-            case '2':
-                newArr = oldArr['ascend2'];
-                return newArr;
-            case '3':
-                newArr = oldArr['ascend3'];
-                return newArr;
-            case '4':
-                newArr = oldArr['ascend4'];
-                return newArr;
-            case '5':
-                newArr = oldArr['ascend5'];
-                return newArr;
-            case '6':
-                newArr = oldArr['ascend6'];
-                return newArr;
-            case '7':
-                let length = Object.keys(oldArr).length;
+        if (ascLvl.includes(lvl)){
+            newArr = oldArr['ascend' + lvl];
+            return newArr;
+        }
+
+        if (lvl == '7'){
+            let length = Object.keys(oldArr).length;
                 
                 for (let i = 1; i<length+1; i++)
                 {
