@@ -107,7 +107,7 @@ client.on('messageCreate', (message) =>
                 });
             }
             else{
-                message.channel.send("Invalid argument, use !help to see valid commands");
+                wrongInput();
             }
             break;
         //returns a random character or boss
