@@ -15,6 +15,15 @@ class Wheel
         }
         else {
             oldArr = genshindb.enemies('boss', {matchCategories: true});
+            
+            //remove duplicate bathysmal vishap
+            for(let i = 0; i < oldArr.length; i++)
+            {
+                if(oldArr[i] === 'Rimebiter Bathysmal Vishap')
+                {
+                    oldArr.splice(i, i);
+                }
+            }
         }
 
         for (let i = 0; i < oldArr.length; i++) {
