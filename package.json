@@ -13,7 +13,7 @@
     "cheerio": "^1.0.0-rc.12",
     "cheerio-tableparser": "^1.0.1",
     "discord.js": "^14.6.0",
-    "genshin-db": "^4.3.11",
+    "genshin-db": "^4.3.13",
     "typescript": "^4.8.4"
   }
 }
