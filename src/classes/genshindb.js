@@ -93,10 +93,12 @@ class InfoScraper
             }
 
             newSearch = newSearch.replace(/ /g, '_');
+            const exceptions = ['Lyney', 'Lynette', 'Freminet'];
 
             scraper.imageScrape(newSearch).then((result) => {
 
                 let imgurl = (newSearch == 'Lumine' || newSearch == 'Aether') ? result[0] : result[1];
+                imgurl = (exceptions.includes(newSearch)) ? result[2] : imgurl; //fcking fatui drip marketing smh
 
                 let newArr = [
                     {
