@@ -43,13 +43,15 @@ class Wheel
         //randomizes array
         let random = Math.floor(Math.random() * array.length);
         let choice = array[random];
+        
+        const exceptions = ['Paimon', 'Lumine', 'Aether'];
 
         //image search
         return new Promise((resolve, reject) => {
 
             scraper.imageScrape(choice).then((result) => {
 
-                if (choice === 'Lumine' || choice === 'Aether') {
+                if (exceptions.includes(choice)) {
                     resolve(result[0]);
                 }
                 else {
