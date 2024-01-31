@@ -63,6 +63,7 @@ class Wheel
                     resolve(imgUrl);
 
                 }
+                console.log(choice);
             })
         })
 
