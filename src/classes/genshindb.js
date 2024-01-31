@@ -93,7 +93,7 @@ class InfoScraper
             }
 
             newSearch = newSearch.replace(/ /g, '_');
-            const exceptions = ['Lyney', 'Lynette', 'Freminet'];
+            const exceptions = ['Lyney', 'Lynette', 'Freminet', 'Furina'];
 
             scraper.imageScrape(newSearch).then((result) => {
 

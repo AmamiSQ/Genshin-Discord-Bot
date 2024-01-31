@@ -45,6 +45,7 @@ class Wheel
         let choice = array[random];
         
         const exceptions = ['Paimon', 'Lumine', 'Aether'];
+        const wishList = ['Lyney', 'Lynette', 'Freminet', 'Furina'];
 
         //image search
         return new Promise((resolve, reject) => {
@@ -53,6 +54,9 @@ class Wheel
 
                 if (exceptions.includes(choice)) {
                     resolve(result[0]);
+                }
+                else if (wishList.includes(choice)) {
+                    resolve(result[2]);
                 }
                 else {
                     let imgUrl = (result.length > 1) ? result[1] : result[0];
