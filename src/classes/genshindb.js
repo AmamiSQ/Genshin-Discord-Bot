@@ -4,19 +4,24 @@ const scraper = new WebScraper();
 
 class InfoScraper
 {
+    scrapeType(type) 
+    {
+        const choiceType = {
+            char: 'characters',
+            weapon: 'weapons'
+        }
+
+        const method = choiceType[type];
+        return method;
+    }
 
     arrayScrape(type)
     {
         let newArr = [];
-        let oldArr; 
-        
-        if (type == 'char'){
-            oldArr = genshindb.characters('names', { matchCategories: true });
-        }
-        else{
-            oldArr = genshindb.weapons('names', { matchCategories: true });
-        }
 
+        let method = this.scrapeType(type);
+        let oldArr = genshindb[method]('names', { matchCategories: true })
+        
         oldArr.forEach((item) => {
             item = item.replace(/ /g, '_')
             newArr.push(item.toLowerCase());
@@ -27,14 +32,8 @@ class InfoScraper
 
     ascensionMaterials(search, lvl, type)
     {
-        let oldArr;
-
-        if (type == 'char'){
-            oldArr = genshindb.characters(search.replace(/_/g, ' ')).costs;
-        }
-        else{
-            oldArr = genshindb.weapons(search.replace(/_/g, ' ')).costs;
-        }
+        let method = this.scrapeType(type);
+        let oldArr = genshindb[method](search.replace(/_/g, ' ')).costs;
         
         let newArr = [];
         let ascLvl = ['1', '2', '3', '4', '5', '6']; 
@@ -83,14 +82,8 @@ class InfoScraper
             let newSearch = search.replace(/_/g, ' ');
             newSearch = newSearch.replace(/(\b[a-z](?!\s))/g, capitalize);
             
-            let info;
-
-            if (type == 'char'){
-                info = genshindb.characters(newSearch);
-            }
-            else{
-                info = genshindb.weapons(newSearch);
-            }
+            let method = this.scrapeType(type);
+            let info = genshindb[method](newSearch);
 
             newSearch = newSearch.replace(/ /g, '_');
             const exceptions = ['Lyney', 'Lynette', 'Freminet', 'Furina'];

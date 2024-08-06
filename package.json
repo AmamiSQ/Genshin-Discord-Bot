@@ -15,5 +15,8 @@
     "discord.js": "^14.6.0",
     "genshin-db": "latest",
     "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.1.0"
   }
 }
